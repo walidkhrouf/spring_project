@@ -2,11 +2,12 @@ package tn.esprit.walidkhrouf.Entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-public class Instructor {
+public class Instructor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int  numInstructor;

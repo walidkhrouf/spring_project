@@ -2,10 +2,11 @@ package tn.esprit.walidkhrouf.Entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class Piste {
+public class Piste implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int numPiste;
@@ -16,5 +17,5 @@ public class Piste {
     private int length;
     private int slope;
     @ManyToMany
-    Set <skier> skiers;
+    Set <Skier> Skiers;
 }
