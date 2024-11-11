@@ -1,10 +1,15 @@
 package tn.esprit.walidkhrouf.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Set;
-
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Course implements Serializable {
     @Id

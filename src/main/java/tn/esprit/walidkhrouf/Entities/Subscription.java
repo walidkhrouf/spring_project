@@ -2,10 +2,15 @@ package tn.esprit.walidkhrouf.Entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Subscription implements Serializable {
     @Id
