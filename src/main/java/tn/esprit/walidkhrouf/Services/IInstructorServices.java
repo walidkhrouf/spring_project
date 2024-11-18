@@ -12,5 +12,7 @@ public interface IInstructorServices {
     Instructor retriveInstructor(int numInstructor);
     List<Instructor> retriveAll();
     void removeInstructor(int numInstructor);
+    Instructor addInstructorToCourse(Instructor ins, List<Integer> numCourse);
+    Instructor addInstructorToCourses(Instructor instructor);
 
 }

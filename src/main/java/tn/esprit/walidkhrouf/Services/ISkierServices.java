@@ -1,6 +1,6 @@
 package tn.esprit.walidkhrouf.Services;
 
-import tn.esprit.walidkhrouf.Entities.Color;
+import tn.esprit.walidkhrouf.Entities.*;
 import tn.esprit.walidkhrouf.Entities.Skier;
 import java.util.List;
 import java.time.LocalDate;
@@ -14,5 +14,8 @@ public interface ISkierServices {
     Skier getSkierByName(String name);
     List<Skier> getSkiersByBirthDate(LocalDate birthDate);
     Skier addSkierToPiste(String name,String lastnam, Color color);
+    Skier addSkierAndAssignToCourse(Skier skier, int numCourse);
+    List<Skier> retrieveSkiersBySubscriptionType(TypeSubscription typeSubscription);
+
 
 }

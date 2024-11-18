@@ -1,5 +1,6 @@
 package tn.esprit.walidkhrouf.Services;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.walidkhrouf.Entities.Course;
@@ -7,10 +8,10 @@ import tn.esprit.walidkhrouf.Entities.Course;
 import tn.esprit.walidkhrouf.Repositories.ICourseRepository;
 
 import java.util.List;
-
+@AllArgsConstructor
 @Service
 public class CourseServicesImpl {
-    @Autowired
+
     private ICourseRepository courseRepository;
 
     public Course addCourse(Course course)

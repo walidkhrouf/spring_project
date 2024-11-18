@@ -1,6 +1,7 @@
 package tn.esprit.walidkhrouf.Services;
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.walidkhrouf.Entities.Piste;
@@ -8,9 +9,10 @@ import tn.esprit.walidkhrouf.Entities.Piste;
 import tn.esprit.walidkhrouf.Repositories.IPisteRepository;
 
 import java.util.List;
+@AllArgsConstructor
 @Service
 public class PisteServicesImpl {
-    @Autowired
+
     private IPisteRepository pisteRepository;
 
     public Piste addPiste(Piste piste)

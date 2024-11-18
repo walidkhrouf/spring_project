@@ -3,10 +3,10 @@ package tn.esprit.walidkhrouf.Controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.walidkhrouf.Entities.Skier;
-import tn.esprit.walidkhrouf.Entities.Subscription;
+import tn.esprit.walidkhrouf.Entities.*;
 
 import tn.esprit.walidkhrouf.Services.SubscriptionServicesImpl;
-
+import java.util.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("subscription")
@@ -36,5 +36,8 @@ public class SubscriptionRestController {
         subscriptionServices.removeSubscription(numSub);
     }
 
-
+    @GetMapping("/getByType/{type}")
+    public Set<Subscription> getSubscriptionByType(@PathVariable TypeSubscription type) {
+        return subscriptionServices.getSubscriptionByType(type);
+    }
 }

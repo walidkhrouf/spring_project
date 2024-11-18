@@ -1,9 +1,9 @@
 package tn.esprit.walidkhrouf.Services;
 
 
-import tn.esprit.walidkhrouf.Entities.Subscription;
+import tn.esprit.walidkhrouf.Entities.*;
 
-import java.util.List;
+import java.util.*;
 
 public interface ISubscriptionServices {
 
@@ -12,6 +12,7 @@ public interface ISubscriptionServices {
     Subscription retriveSubscription(int numSub);
     List<Subscription> retriveAll();
     void removeSubscription(int numSub);
+    Set<Subscription> getSubscriptionByType(TypeSubscription type);
 
 
 }

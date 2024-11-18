@@ -1,7 +1,7 @@
 package tn.esprit.walidkhrouf.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import tn.esprit.walidkhrouf.Entities.Skier;
+import tn.esprit.walidkhrouf.Entities.*;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -12,4 +12,6 @@ public interface ISkierRepository  extends CrudRepository<Skier,Long> {
     Skier findByLastname(String lastname);
     Skier findByNameAndLastname(String name, String lastname);
     List<Skier> findByBirthDate(LocalDate birthDate);
+    List<Skier> findBySubscription_TypeSub(TypeSubscription typeSubscription);
+
 }

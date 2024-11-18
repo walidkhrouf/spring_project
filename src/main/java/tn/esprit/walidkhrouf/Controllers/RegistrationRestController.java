@@ -44,7 +44,7 @@ public class RegistrationRestController {
     }
 
     @PostMapping("/addToCourse/{numCourse}")
-    public Registration addRegistrationToSkier(@PathVariable int numCourse , @RequestBody Registration registration) {
+    public Registration addRegistrationToCourse(@PathVariable int numCourse , @RequestBody Registration registration) {
         return registrationServices.addRegistrationToCourse(registration, numCourse);
     }
 

@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.walidkhrouf.Entities.Color;
 import tn.esprit.walidkhrouf.Entities.Skier;
+import tn.esprit.walidkhrouf.Entities.*;
 import tn.esprit.walidkhrouf.Entities.Piste;
-import tn.esprit.walidkhrouf.Repositories.IPisteRepository;
-import tn.esprit.walidkhrouf.Repositories.ISkierRepository;
+import tn.esprit.walidkhrouf.Repositories.*;
+
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Set;
@@ -18,7 +19,9 @@ import java.util.HashSet;
 public class SkierServicesImpl implements ISkierServices{
     private final ISkierRepository skierRepository;
     private final IPisteRepository pisteRepository;
-
+    private final ICourseRepository courseRepository;
+    private final ISubscriptionRepository subscriptionRepository;
+    private final IRegistrationRepository registrationRepository;
 
 
 
@@ -77,5 +80,49 @@ public class SkierServicesImpl implements ISkierServices{
         }
 
         return skierRepository.save(skier);
+    }
+
+
+    public Skier addSkierAndAssignToCourse(Skier skier, int numCourse) {
+        // Récupérer le Course à partir de l'ID
+        Course course = courseRepository.findById(numCourse)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        // Créer une nouvelle entité Skier
+        Skier newSkier = new Skier();
+        newSkier.setName(skier.getName());
+        newSkier.setLastname(skier.getLastname());
+        newSkier.setBirthDate(skier.getBirthDate());
+
+        // Initialiser les enregistrements si nécessaire
+        if (newSkier.getRegistrations() == null) {
+            newSkier.setRegistrations(new HashSet<>());
+        }
+
+        // Créer une nouvelle entité Subscription pour le Skier
+        Subscription newSubscription = new Subscription();
+        newSubscription.setSkier(newSkier);
+        newSkier.setSubscription(newSubscription);
+
+        // Créer une nouvelle entité Registration pour lier le Skier au Course
+        Registration newRegistration = new Registration();
+        newRegistration.setSkier(newSkier);
+        newRegistration.setCourse(course);
+
+        // Ajouter l'enregistrement à la collection
+        newSkier.getRegistrations().add(newRegistration);
+        course.getRegistrations().add(newRegistration);
+
+        // Enregistrer les entités dans la base de données
+        skierRepository.save(newSkier);
+        subscriptionRepository.save(newSubscription);
+        registrationRepository.save(newRegistration);
+
+        // Retourner le nouveau Skier
+        return newSkier;
+    }
+
+    public List<Skier> retrieveSkiersBySubscriptionType(TypeSubscription typeSubscription) {
+        return skierRepository.findBySubscription_TypeSub(typeSubscription);
     }
 }
