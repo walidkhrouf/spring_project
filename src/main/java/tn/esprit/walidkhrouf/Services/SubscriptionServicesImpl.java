@@ -2,7 +2,10 @@ package tn.esprit.walidkhrouf.Services;
 
 
 import lombok.AllArgsConstructor;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.walidkhrouf.Entities.*;
@@ -11,6 +14,8 @@ import tn.esprit.walidkhrouf.Repositories.ISubscriptionRepository;
 import java.util.*;
 import java.util.stream.Collectors;
 @AllArgsConstructor
+@Slf4j
+@ToString
 @Service
 public class SubscriptionServicesImpl {
 
@@ -46,5 +51,11 @@ public class SubscriptionServicesImpl {
                 .sorted((s1, s2) -> s1.getStartDate().compareTo(s2.getStartDate()))
                 .collect(Collectors.toSet());
     }
-
+    //cron= second minute heure jourDuMois mois jourDeLaSemaine
+    @Scheduled(cron = "*/60 * * * * *")
+    public void getByStartDate() {
+        for (Subscription subscription :subscriptionRepository.getByStartDate()) {
+            log.info(subscription.toString());
+        }
+    }
 }

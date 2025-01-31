@@ -20,11 +20,7 @@ public class SkierRestController {
         return skierServices.addSkier(skier);
 
     }
-    @GetMapping("/get/{numSkier}")
-    public Skier getSkier (@PathVariable Long numSkier)
-    {
-        return skierServices.retriveSkier(numSkier);
-    }
+
     @PutMapping("/update/{numSkier}")
     public Skier updateSkier(@RequestBody Skier skier)
     {
@@ -63,5 +59,9 @@ public class SkierRestController {
     @GetMapping("/getSkiersBySubscription/{typeSubscription}")
     public List<Skier> retrieveSkiersBySubscriptionType(@PathVariable TypeSubscription typeSubscription) {
         return skierServices.retrieveSkiersBySubscriptionType(typeSubscription);
+    }
+    @GetMapping("/getSkiersByTypeCourse/{typeCourse}")
+    public List<Skier> getSkiersByTypeCourse(@PathVariable TypeCourse typeCourse) {
+        return skierServices.getSkiersByTypeCourse(typeCourse);
     }
 }

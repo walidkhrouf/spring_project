@@ -13,6 +13,6 @@ public interface ISubscriptionServices {
     List<Subscription> retriveAll();
     void removeSubscription(int numSub);
     Set<Subscription> getSubscriptionByType(TypeSubscription type);
-
+    void getByStartDate();
 
 }

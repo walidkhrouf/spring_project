@@ -1,8 +1,11 @@
 package tn.esprit.walidkhrouf.Services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.walidkhrouf.Entities.Color;
 import tn.esprit.walidkhrouf.Entities.Skier;
 import tn.esprit.walidkhrouf.Entities.*;
@@ -13,7 +16,8 @@ import java.util.List;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.HashSet;
-
+import java.util.logging.Logger;
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SkierServicesImpl implements ISkierServices{
@@ -82,47 +86,47 @@ public class SkierServicesImpl implements ISkierServices{
         return skierRepository.save(skier);
     }
 
-
+    @Transactional
     public Skier addSkierAndAssignToCourse(Skier skier, int numCourse) {
-        // Récupérer le Course à partir de l'ID
+
         Course course = courseRepository.findById(numCourse)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-
-        // Créer une nouvelle entité Skier
-        Skier newSkier = new Skier();
-        newSkier.setName(skier.getName());
-        newSkier.setLastname(skier.getLastname());
-        newSkier.setBirthDate(skier.getBirthDate());
-
-        // Initialiser les enregistrements si nécessaire
-        if (newSkier.getRegistrations() == null) {
-            newSkier.setRegistrations(new HashSet<>());
+                .orElse(null);
+        for (Registration registration:skier.getRegistrations())
+        {
+           registration.setCourse(course);
+           registration.setSkier(skier);
+           registrationRepository.save(registration);
         }
 
-        // Créer une nouvelle entité Subscription pour le Skier
-        Subscription newSubscription = new Subscription();
-        newSubscription.setSkier(newSkier);
-        newSkier.setSubscription(newSubscription);
-
-        // Créer une nouvelle entité Registration pour lier le Skier au Course
-        Registration newRegistration = new Registration();
-        newRegistration.setSkier(newSkier);
-        newRegistration.setCourse(course);
-
-        // Ajouter l'enregistrement à la collection
-        newSkier.getRegistrations().add(newRegistration);
-        course.getRegistrations().add(newRegistration);
-
-        // Enregistrer les entités dans la base de données
-        skierRepository.save(newSkier);
-        subscriptionRepository.save(newSubscription);
-        registrationRepository.save(newRegistration);
-
-        // Retourner le nouveau Skier
-        return newSkier;
+        return skierRepository.save(skier);
     }
 
     public List<Skier> retrieveSkiersBySubscriptionType(TypeSubscription typeSubscription) {
-        return skierRepository.findBySubscription_TypeSub(typeSubscription);
+        return skierRepository.getSkiersByTypeSubscription(typeSubscription);
     }
+    public List<Skier> getSkiersByTypeCourse (TypeCourse typeCourse) {
+        return skierRepository.getSkiersByTypeCourse(typeCourse);
+    }
+    @Scheduled(cron = "*/15 * * * * *")
+    public void getSkierNotif() {
+        log.info("bonjour");
+        log.debug("in method: getSkierNotif");
+        log.error("this is an error");
+        log.warn("this is a worning");
+    }
+
+
+
+   //@Scheduled(cron = "*/15 * * * * *")
+  //  public void getSkierN() {
+        //log.info("Fetching skiers...");
+
+       // List<Skier> skiers = skierRepository.findAll();
+
+      //  skiers.forEach(skier -> log.info("Skier Name: {}", skier.getName()));
+
+       // log.info("Total skiers logged: {}", skiers.size());
+   // }
+
+
 }
