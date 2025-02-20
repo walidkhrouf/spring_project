@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('MAVEN') {
+        stage('Compile Stage') {
             steps {
-                sh "mvn -version"
+                sh "mvn clean compile"
             }
         }
     }
