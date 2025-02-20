@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage('Compile Stage') {
             steps {
-                sh "mvn clean compile"
+                withSonarQubeEnv(installationName: 'sq1') {
+                sh './mvn clean sonar:sonar'
+                }
             }
         }
     }
