@@ -1,10 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Compile Stage') {
+        stage('Compile and Analyze') {
             steps {
                 withSonarQubeEnv(installationName: 'sq1') {
-                sh "mvn clean sonar:sonar"
+                    sh "mvn clean package sonar:sonar"
                 }
             }
         }
