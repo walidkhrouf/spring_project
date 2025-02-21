@@ -8,7 +8,8 @@ pipeline {
         }
        stage('Sonar Analysis') {
             steps {
-               sh "mvn sonar:sonar -Dsonar.login=${env.sq1}"
+               withSonarQubeEnv('sq1') {
+               sh 'mvn sonar:sonar'
             }
         }
     }
