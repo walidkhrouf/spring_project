@@ -6,6 +6,8 @@ pipeline {
                 sh 'mvn clean compile'
             }
         }
-       
+        stage('Sonar Analysis') {
+        sh 'mvn sonar:sonar'
+    }
     }
 }
