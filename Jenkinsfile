@@ -6,8 +6,10 @@ pipeline {
                 sh 'mvn clean compile'
             }
         }
-        stage('Sonar Analysis') {
-        sh 'mvn sonar:sonar'
-    }
+       stage('Sonar Analysis') {
+            steps {
+                sh 'mvn sonar:sonar'
+            }
+        }
     }
 }
