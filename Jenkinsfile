@@ -1,12 +1,10 @@
-pipeline {
-    agent any
-    stages {
-        stage('Compile and Analyze') {
-            steps {
-                withSonarQubeEnv(installationName: 'sq1') {
-                    sh "mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
-                }
-            }
-        }
+stage('Build') {
+    steps {
+        sh 'mvn clean install'
+    }
+}
+stage('Sonar Analysis') {
+    steps {
+        sh 'mvn sonar:sonar'
     }
 }
